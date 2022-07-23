@@ -27,7 +27,7 @@ export class PeopleService {
     return await this.peopleRepository.update(id, updatePersonDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} person`;
+  async remove(id: number): Promise<string> {
+    return await this.peopleRepository.remove(id);
   }
 }

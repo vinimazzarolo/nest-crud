@@ -40,7 +40,7 @@ export class PeopleController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.peopleService.remove(+id);
+  remove(@Param() params: FindPersonDto) {
+    return this.peopleService.remove(+params.id);
   }
 }

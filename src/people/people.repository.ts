@@ -53,7 +53,17 @@ export class PeopleRepository {
     return person;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} person`;
+  async remove(id: number): Promise<string> {
+    const person = await this.personRepository.findOneBy({ id });
+
+    if (!person) {
+      return 'Pessoa não encontrada.';
+    }
+
+    const message = `A pessoa ID: ${person.id}, Nome: ${person.name} foi removida.`;
+
+    await this.personRepository.remove(person);
+
+    return message;
   }
 }
