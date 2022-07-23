@@ -39,11 +39,14 @@ export class PeopleRepository {
   }
 
   async findAll(): Promise<Person[]> {
-    return this.personRepository.find();
+    return this.personRepository.find({ relations: ['addresses'] });
   }
 
   async findOne(id: number): Promise<string | Person> {
-    const person = await this.personRepository.findOneBy({ id });
+    const person = await this.personRepository.findOne({
+      where: { id },
+      relations: ['addresses'],
+    });
 
     if (!person) {
       throw new HttpException(
