@@ -16,8 +16,8 @@ export class PeopleService {
     return await this.peopleRepository.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} person`;
+  async findOne(id: number): Promise<string | Person> {
+    return await this.peopleRepository.findOne(id);
   }
 
   async update(

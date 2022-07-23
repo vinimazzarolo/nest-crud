@@ -28,8 +28,14 @@ export class PeopleRepository {
     return this.personRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} person`;
+  async findOne(id: number): Promise<string | Person> {
+    const person = await this.personRepository.findOneBy({ id });
+
+    if (!person) {
+      return 'Pessoa não encontrada.';
+    }
+
+    return person;
   }
 
   async update(

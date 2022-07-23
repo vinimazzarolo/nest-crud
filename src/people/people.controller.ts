@@ -27,8 +27,8 @@ export class PeopleController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.peopleService.findOne(+id);
+  findOne(@Param() params: FindPersonDto) {
+    return this.peopleService.findOne(+params.id);
   }
 
   @Put(':id')
