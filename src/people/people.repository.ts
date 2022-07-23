@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Address } from 'src/addresses/entities/address.entity';
 import { Repository } from 'typeorm';
@@ -46,7 +46,10 @@ export class PeopleRepository {
     const person = await this.personRepository.findOneBy({ id });
 
     if (!person) {
-      return 'Pessoa não encontrada.';
+      throw new HttpException(
+        { message: 'Pessoa não encontrada' },
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     return person;
@@ -62,7 +65,10 @@ export class PeopleRepository {
     });
 
     if (!person) {
-      return 'Pessoa não encontrada.';
+      throw new HttpException(
+        { message: 'Pessoa não encontrada' },
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     person.name = updatePersonDto.name;
@@ -76,13 +82,13 @@ export class PeopleRepository {
       const requestId = personAddress.id;
 
       if (!requestId) {
-        return 'ID do endereço não informado.';
+        return false;
       }
 
       const address = await this.addressRepository.findOneBy({ id: requestId });
 
       if (!address) {
-        return 'Endereço inválido.';
+        return false;
       }
 
       address.cep = personAddress.cep;
@@ -104,7 +110,10 @@ export class PeopleRepository {
     const person = await this.personRepository.findOneBy({ id });
 
     if (!person) {
-      return 'Pessoa não encontrada.';
+      throw new HttpException(
+        { message: 'Pessoa não encontrada' },
+        HttpStatus.NOT_FOUND,
+      );
     }
 
     const message = `A pessoa ID: ${person.id}, Nome: ${person.name} foi removida.`;

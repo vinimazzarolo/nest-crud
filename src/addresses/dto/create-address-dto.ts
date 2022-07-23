@@ -9,7 +9,7 @@ import {
 
 export class CreateAddressDto {
   @IsOptional()
-  @IsNumberString()
+  @IsNumber()
   id: number;
 
   @IsNotEmpty()
