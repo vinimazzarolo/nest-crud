@@ -11,36 +11,37 @@ import { PeopleService } from './people.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
 import { FindPersonDto } from './dto/find-person-dto';
+import { Person } from './entities/person.entity';
 
 @Controller('people')
 export class PeopleController {
   constructor(private readonly peopleService: PeopleService) {}
 
   @Post()
-  create(@Body() createPersonDto: CreatePersonDto) {
-    return this.peopleService.create(createPersonDto);
+  async create(@Body() createPersonDto: CreatePersonDto): Promise<number> {
+    return await this.peopleService.create(createPersonDto);
   }
 
   @Get()
-  findAll() {
-    return this.peopleService.findAll();
+  async findAll(): Promise<Person[]> {
+    return await this.peopleService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param() params: FindPersonDto) {
-    return this.peopleService.findOne(+params.id);
+  async findOne(@Param() params: FindPersonDto): Promise<string | Person> {
+    return await this.peopleService.findOne(+params.id);
   }
 
   @Put(':id')
-  update(
+  async update(
     @Param() params: FindPersonDto,
     @Body() updatePersonDto: UpdatePersonDto,
-  ) {
-    return this.peopleService.update(+params.id, updatePersonDto);
+  ): Promise<string | Person> {
+    return await this.peopleService.update(+params.id, updatePersonDto);
   }
 
   @Delete(':id')
-  remove(@Param() params: FindPersonDto) {
-    return this.peopleService.remove(+params.id);
+  async remove(@Param() params: FindPersonDto): Promise<string | Person> {
+    return await this.peopleService.remove(+params.id);
   }
 }
