@@ -1,5 +1,7 @@
 import { Type } from 'class-transformer';
 import {
+  ArrayNotEmpty,
+  IsArray,
   IsDate,
   IsIn,
   IsNotEmpty,
@@ -8,7 +10,9 @@ import {
   MaxDate,
   MaxLength,
   MinLength,
+  ValidateNested,
 } from 'class-validator';
+import { CreateAddressDto } from 'src/addresses/dto/create-address-dto';
 
 export class CreatePersonDto {
   @IsNotEmpty()
@@ -30,4 +34,11 @@ export class CreatePersonDto {
   @IsDate()
   @MaxDate(new Date())
   birthDate: Date;
+
+  @IsNotEmpty()
+  @IsArray()
+  @ArrayNotEmpty()
+  @ValidateNested({ each: true })
+  @Type(() => CreateAddressDto)
+  addresses: CreateAddressDto[];
 }

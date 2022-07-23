@@ -1,7 +1,9 @@
+import { Address } from 'src/addresses/entities/address.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -11,7 +13,8 @@ export class Person {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar', {
+  @Column({
+    type: 'varchar',
     length: 150,
   })
   name: string;
@@ -27,6 +30,9 @@ export class Person {
 
   @Column({ type: 'date' })
   birthDate: Date;
+
+  @OneToMany(() => Person, (person) => person.addresses)
+  addresses: Address[];
 
   @CreateDateColumn({ type: 'timestamp' })
   public createdAt: Date;

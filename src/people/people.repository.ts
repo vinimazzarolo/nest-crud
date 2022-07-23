@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Address } from 'src/addresses/entities/address.entity';
 import { Repository } from 'typeorm';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
@@ -9,17 +10,30 @@ import { Person } from './entities/person.entity';
 export class PeopleRepository {
   constructor(
     @InjectRepository(Person) private personRepository: Repository<Person>,
+    @InjectRepository(Address) private addressRepository: Repository<Address>,
   ) {}
 
   async create(createPersonDto: CreatePersonDto): Promise<number> {
     const person = new Person();
-
     person.name = createPersonDto.name;
     person.identification = createPersonDto.identification;
     person.type = createPersonDto.type;
     person.birthDate = createPersonDto.birthDate;
-
     await this.personRepository.save(person);
+
+    createPersonDto.addresses.forEach((personAddress) => {
+      const address = new Address();
+      address.cep = personAddress.cep;
+      address.street = personAddress.street;
+      address.number = personAddress.number;
+      address.neighborhood = personAddress.neighbourhood;
+      address.complement = personAddress.complement;
+      address.city = personAddress.city;
+      address.state = personAddress.state;
+      address.type = personAddress.type;
+      address.person = person;
+      this.addressRepository.save(address);
+    });
 
     return person.id;
   }
