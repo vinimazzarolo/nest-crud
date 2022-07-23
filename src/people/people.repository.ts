@@ -24,8 +24,8 @@ export class PeopleRepository {
     return person.id;
   }
 
-  findAll() {
-    return `This action returns all people`;
+  async findAll(): Promise<Person[]> {
+    return this.personRepository.find();
   }
 
   findOne(id: number) {

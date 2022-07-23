@@ -12,8 +12,8 @@ export class PeopleService {
     return await this.peopleRepository.create(createPersonDto);
   }
 
-  findAll() {
-    return `This action returns all people`;
+  async findAll(): Promise<Person[]> {
+    return await this.peopleRepository.findAll();
   }
 
   findOne(id: number) {
