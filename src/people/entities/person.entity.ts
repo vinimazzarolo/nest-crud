@@ -31,7 +31,7 @@ export class Person {
   @Column({ type: 'date' })
   birthDate: Date;
 
-  @OneToMany(() => Person, (person) => person.addresses)
+  @OneToMany((address) => Address, (address) => address.person)
   addresses: Address[];
 
   @CreateDateColumn({ type: 'timestamp' })

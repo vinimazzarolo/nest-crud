@@ -1,12 +1,17 @@
 import {
   IsNotEmpty,
   IsNumber,
+  IsNumberString,
   IsOptional,
   IsString,
   Length,
 } from 'class-validator';
 
 export class CreateAddressDto {
+  @IsOptional()
+  @IsNumberString()
+  id: number;
+
   @IsNotEmpty()
   @IsString()
   @Length(9)

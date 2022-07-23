@@ -21,7 +21,7 @@ export class PeopleRepository {
     person.birthDate = createPersonDto.birthDate;
     await this.personRepository.save(person);
 
-    createPersonDto.addresses.forEach((personAddress) => {
+    createPersonDto.addresses.forEach(async (personAddress) => {
       const address = new Address();
       address.cep = personAddress.cep;
       address.street = personAddress.street;
@@ -32,7 +32,7 @@ export class PeopleRepository {
       address.state = personAddress.state;
       address.type = personAddress.type;
       address.person = person;
-      this.addressRepository.save(address);
+      await this.addressRepository.save(address);
     });
 
     return person.id;
@@ -56,7 +56,10 @@ export class PeopleRepository {
     id: number,
     updatePersonDto: UpdatePersonDto,
   ): Promise<string | Person> {
-    const person = await this.personRepository.findOneBy({ id });
+    const person = await this.personRepository.findOne({
+      where: { id },
+      relations: ['addresses'],
+    });
 
     if (!person) {
       return 'Pessoa não encontrada.';
@@ -67,10 +70,34 @@ export class PeopleRepository {
     person.type = updatePersonDto.type;
     person.birthDate = updatePersonDto.birthDate;
     person.updatedAt = new Date();
-
     await this.personRepository.save(person);
 
-    return person;
+    updatePersonDto.addresses.forEach(async (personAddress) => {
+      const requestId = personAddress.id;
+
+      if (!requestId) {
+        return 'ID do endereço não informado.';
+      }
+
+      const address = await this.addressRepository.findOneBy({ id: requestId });
+
+      if (!address) {
+        return 'Endereço inválido.';
+      }
+
+      address.cep = personAddress.cep;
+      address.street = personAddress.street;
+      address.number = personAddress.number;
+      address.neighborhood = personAddress.neighbourhood;
+      address.complement = personAddress.complement;
+      address.city = personAddress.city;
+      address.state = personAddress.state;
+      address.type = personAddress.type;
+      address.person = person;
+      await this.addressRepository.save(address);
+    });
+
+    return { ...person };
   }
 
   async remove(id: number): Promise<string> {
