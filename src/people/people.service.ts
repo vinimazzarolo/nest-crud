@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
+import { PeopleRepository } from './people.repository';
 
 @Injectable()
 export class PeopleService {
-  create(createPersonDto: CreatePersonDto) {
-    return 'This action adds a new person';
+  constructor(private readonly peopleRepository: PeopleRepository) {}
+
+  async create(createPersonDto: CreatePersonDto) {
+    return await this.peopleRepository.create(createPersonDto);
   }
 
   findAll() {
