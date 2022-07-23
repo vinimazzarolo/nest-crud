@@ -110,7 +110,10 @@ export class PeopleRepository {
   }
 
   async remove(id: number): Promise<string> {
-    const person = await this.personRepository.findOneBy({ id });
+    const person = await this.personRepository.findOne({
+      where: { id },
+      relations: ['addresses'],
+    });
 
     if (!person) {
       throw new HttpException(
@@ -122,6 +125,7 @@ export class PeopleRepository {
     const message = `A pessoa ID: ${person.id}, Nome: ${person.name} foi removida.`;
 
     await this.personRepository.remove(person);
+    await this.addressRepository.remove(person.addresses);
 
     return message;
   }

@@ -40,7 +40,9 @@ export class Address {
   @Column({ type: 'tinyint' })
   type: number;
 
-  @ManyToOne(() => Address, (address) => address.person)
+  @ManyToOne((address) => Address, (address) => address.person, {
+    onDelete: 'CASCADE',
+  })
   person: Person;
 
   @CreateDateColumn({ type: 'timestamp' })

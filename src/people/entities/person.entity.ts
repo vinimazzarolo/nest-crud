@@ -31,7 +31,9 @@ export class Person {
   @Column({ type: 'date' })
   birthDate: Date;
 
-  @OneToMany((address) => Address, (address) => address.person)
+  @OneToMany((address) => Address, (address) => address.person, {
+    onDelete: 'CASCADE',
+  })
   addresses: Address[];
 
   @CreateDateColumn({ type: 'timestamp' })
