@@ -103,7 +103,7 @@ export class PeopleRepository {
       await this.addressRepository.save(address);
     });
 
-    return { ...person };
+    return person;
   }
 
   async remove(id: number): Promise<string> {
