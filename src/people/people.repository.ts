@@ -8,7 +8,7 @@ import { Person } from './entities/person.entity';
 export class PeopleRepository {
   constructor(private readonly dataSource: DataSource) {}
 
-  async create(createPersonDto: CreatePersonDto): Promise<string> {
+  async create(createPersonDto: CreatePersonDto): Promise<number> {
     const person = new Person();
 
     person.name = createPersonDto.name;
@@ -17,8 +17,8 @@ export class PeopleRepository {
     person.birthDate = createPersonDto.birthDate;
 
     await this.dataSource.manager.save(person);
-    console.log(`Person has been saved: ${person.id}`);
-    return 'lol';
+
+    return person.id;
   }
 
   findAll() {
