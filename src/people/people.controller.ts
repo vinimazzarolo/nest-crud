@@ -3,13 +3,14 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { PeopleService } from './people.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
+import { FindPersonDto } from './dto/find-person-dto';
 
 @Controller('people')
 export class PeopleController {
@@ -30,9 +31,12 @@ export class PeopleController {
     return this.peopleService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePersonDto: UpdatePersonDto) {
-    return this.peopleService.update(+id, updatePersonDto);
+  @Put(':id')
+  update(
+    @Param() params: FindPersonDto,
+    @Body() updatePersonDto: UpdatePersonDto,
+  ) {
+    return this.peopleService.update(+params.id, updatePersonDto);
   }
 
   @Delete(':id')
