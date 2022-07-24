@@ -13,21 +13,21 @@ OBS: alvez seja necessário interromper a execução dos containers docker após
 `POST`: Cadastrar uma pessoa e seus endereços: `http://localhost:3000/people`. Exemplo do que deve ser enviado no `body` da requisição:
 ```json
 {
-	"name": "Vini",
-	"identification": "00000000000",
-	"type": 1,
-	"birthDate": "2022-07-24",
-	"addresses": [
-		{
-			"street": "Rua Lorem Ipsum",
-			"cep": "95330-000",
-			"number": 11,
-			"neighbourhood": "Centro",
-			"city": "Veranópolis",
-			"state": "RS",
-			"type": 1
-		}
-	]
+  "name": "Vini",
+  "identification": "00000000000",
+  "type": 1,
+  "birthDate": "2022-07-24",
+  "addresses": [
+    {
+      "street": "Rua Lorem Ipsum",
+      "cep": "95330-000",
+      "number": 11,
+      "neighbourhood": "Centro",
+      "city": "Veranópolis",
+      "state": "RS",
+      "type": 1
+    }
+  ]
 }
 ```
 `GET`: Obter todas as pessoas: `http://localhost:3000/people`
@@ -37,22 +37,22 @@ OBS: alvez seja necessário interromper a execução dos containers docker após
 `PUT`: Atualiza uma pessoa e seus endereços: ```http://localhost:3000/people/{id}```. Exemplo do que deve ser enviado no `body` da requisição:
 ```json
 {
-	"name": "Vini",
-	"identification": "00000000000",
-	"type": 1,
-	"birthDate": "2022-07-24",
-	"addresses": [
-		{
+"name": "Vini",
+"identification": "00000000000",
+"type": 1,
+"birthDate": "2022-07-24",
+"addresses": [
+    {
       "id": 1,
-			"street": "Rua Lorem Ipsum Updated!!!",
-			"cep": "95330-000",
-			"number": 22,
-			"neighbourhood": "Centro",
-			"city": "Veranópolis",
-			"state": "RS",
-			"type": 1
-		}
-	]
+      "street": "Rua Lorem Ipsum Updated!!!",
+      "cep": "95330-000",
+      "number": 22,
+      "neighbourhood": "Centro",
+      "city": "Veranópolis",
+      "state": "RS",
+      "type": 1
+    }
+  ]
 }
 ```
 
